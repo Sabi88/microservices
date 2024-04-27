@@ -1,0 +1,49 @@
+server:
+  port: 8081
+spring:
+  application:
+    name: organization
+  profiles:
+    active: "prod"
+  datasource:
+    password: ''
+    url: jdbc:h2:mem:testdb
+    driverClassName : org.h2.Driver
+    username: sa
+  h2:
+    console:
+      enabled: true
+  jpa:
+    defer-datasource-initialization: true
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+  config:
+    import: "optional:configserver:http://localhost:8072/"
+    
+management:
+ endpoints:
+  web:
+   exposure:
+    include: info, shutdown
+ endpoint:
+  shutdown:
+   enabled: true
+ info:
+  env:
+   enabled: true
+  
+eureka:
+ instance:
+  preferIpAddress: true
+ client:
+  registerWithEureka: true
+  fetchRegistry: true
+  serviceUrl:
+    defaultZone: http://localhost:8070/eureka/
+    
+info:
+ app:
+  name: "organization"
+  description : "TUS Organization"
+  version: "1.0.0"
